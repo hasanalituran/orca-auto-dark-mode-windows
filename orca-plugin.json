@@ -1,0 +1,37 @@
+{
+  "manifestVersion": 2,
+  "id": "orca-toggle-theme",
+  "publisher": "hasanturan",
+  "name": "Toggle Light/Dark Theme",
+  "version": "0.1.0",
+  "execution": "trusted-worker",
+  "pluginApi": 1,
+  "description": "Status bar button to toggle Orca between light and dark themes.",
+  "license": "MIT",
+  "repository": "https://github.com/hasanturan/orca-toggle-theme",
+  "engines": {
+    "orca": ">=1.4.251"
+  },
+  "main": "src/worker.ts",
+  "contributes": {
+    "commands": [
+      {
+        "id": "toggle",
+        "title": "Toggle Light/Dark Theme"
+      }
+    ],
+    "statusBarItems": [
+      {
+        "id": "toggle",
+        "text": "Theme",
+        "icon": "lightbulb",
+        "tooltip": "Toggle between light and dark themes",
+        "command": "toggle"
+      }
+    ]
+  },
+  "capabilities": [
+    { "kind": "storage:own" },
+    { "kind": "appearance:write" }
+  ]
+}
