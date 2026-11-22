@@ -2,7 +2,7 @@
   "manifestVersion": 2,
   "id": "toggle-light-dark-theme",
   "name": "Toggle Light/Dark Theme",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "execution": "trusted-worker",
   "pluginApi": 1,
   "description": "Status bar button to toggle Orca between light and dark themes.",
