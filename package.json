@@ -1,0 +1,13 @@
+{
+  "name": "orca-toggle-light-dark-theme",
+  "version": "0.1.5",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^2.0.0"
+  }
+}

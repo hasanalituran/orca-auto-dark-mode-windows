@@ -21,3 +21,7 @@ jobs:
           test -f src/panel.tsx
           test -f LICENSE
           echo "files ok"
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
