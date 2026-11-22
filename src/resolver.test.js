@@ -10,7 +10,7 @@ import {
   orcaUserDataDir,
 } from './resolver'
 
-let tmp: string
+let tmp
 
 beforeEach(() => {
   tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'orca-test-'))
