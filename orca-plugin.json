@@ -17,6 +17,10 @@
       {
         "id": "toggle",
         "title": "Toggle Light/Dark Theme"
+      },
+      {
+        "id": "list-themes",
+        "title": "List Installed Themes"
       }
     ],
     "statusBarItems": [
@@ -27,10 +31,27 @@
         "tooltip": "Toggle between light and dark themes",
         "command": "toggle"
       }
+    ],
+    "settings": [
+      {
+        "key": "lightTheme",
+        "title": "Light theme",
+        "description": "Content id of the theme to apply in light mode, e.g. plugin:stablyai.orca-ayu-theme/ayu-light",
+        "type": "string",
+        "default": "plugin:stablyai.orca-ayu-theme/ayu-light"
+      },
+      {
+        "key": "darkTheme",
+        "title": "Dark theme",
+        "description": "Content id of the theme to apply in dark mode, e.g. plugin:stablyai.orca-ayu-theme/ayu-dark",
+        "type": "string",
+        "default": "plugin:stablyai.orca-ayu-theme/ayu-dark"
+      }
     ]
   },
   "capabilities": [
     { "kind": "storage:own" },
+    { "kind": "settings:own" },
     { "kind": "appearance:write" }
   ]
 }
