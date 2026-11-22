@@ -46,6 +46,9 @@ describe('findPluginDir', () => {
 })
 
 describe('resolveTheme', () => {
+  it('returns null for empty content id', () => {
+    expect(resolveTheme(tmp, '')).toBeNull()
+  })
   it('resolves theme files', () => {
     const pluginDir = path.join(tmp, 'plugins', 'p', 'hash1')
     fs.mkdirSync(path.join(pluginDir, 'themes'), { recursive: true })
@@ -63,6 +66,12 @@ describe('resolveTheme', () => {
   })
   it('returns null for missing theme', () => {
     expect(resolveTheme(tmp, 'plugin:p/nope')).toBeNull()
+  })
+})
+
+describe('orcaUserDataDir', () => {
+  it('returns mac path', () => {
+    expect(orcaUserDataDir('/home/u', 'darwin', {})).toBe('/home/u/Library/Application Support/orca')
   })
 })
 

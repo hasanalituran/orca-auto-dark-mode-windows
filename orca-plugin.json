@@ -2,10 +2,10 @@
   "manifestVersion": 2,
   "id": "toggle-light-dark-theme",
   "name": "Toggle Light/Dark Theme",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "execution": "trusted-worker",
   "pluginApi": 1,
-  "description": "Status bar button to toggle Orca between light and dark themes.",
+  "description": "Toggle Orca between light and dark themes from the status bar. Pick any installed theme for each mode in the Theme Picker panel; the status bar button switches instantly. Defaults to Orca's neutral palette when no theme is configured.",
   "license": "MIT",
   "repository": "https://github.com/hasanturan/orca-toggle-theme",
   "engines": {
