@@ -110,8 +110,7 @@ export default function activate(orca: OrcaWorkerApi): void {
     await orca.storage.set(STORAGE_KEY, mode)
     await orca.host.call('statusBar.update', {
       id: 'toggle',
-      text: mode === 'dark' ? 'Dark' : 'Light',
-      icon: 'lightbulb'
+      text: mode === 'dark' ? '☾' : '☀'
     })
   }
 
@@ -174,8 +173,7 @@ export default function activate(orca: OrcaWorkerApi): void {
   void currentMode().then((mode) => {
     void orca.host.call('statusBar.update', {
       id: 'toggle',
-      text: mode === 'dark' ? 'Dark' : 'Light',
-      icon: 'lightbulb'
+      text: mode === 'dark' ? '☾' : '☀'
     })
   })
 }

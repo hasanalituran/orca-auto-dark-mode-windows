@@ -1,13 +1,15 @@
 {
+  "$schema": "https://raw.githubusercontent.com/stablyai/orca/main/docs/schemas/plugins/orca-plugin.v2.schema.json",
   "manifestVersion": 2,
   "id": "toggle-light-dark-theme",
   "name": "Toggle Light/Dark Theme",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "execution": "trusted-worker",
   "pluginApi": 1,
   "description": "Toggle Orca between light and dark themes from the status bar. Pick any installed theme for each mode in the Theme Picker panel; the status bar button switches instantly. Defaults to Orca's neutral palette when no theme is configured.",
   "license": "MIT",
-  "repository": "https://github.com/hasanturan/orca-toggle-theme",
+  "author": { "name": "hasanalituran" },
+  "repository": "https://github.com/hasanalituran/orca-auto-dark-mode-windows",
   "engines": {
     "orca": ">=1.4.251"
   },
@@ -35,8 +37,7 @@
     "statusBarItems": [
       {
         "id": "toggle",
-        "text": "Theme",
-        "icon": "lightbulb",
+        "text": "☀",
         "tooltip": "Toggle between light and dark themes",
         "command": "toggle"
       }
