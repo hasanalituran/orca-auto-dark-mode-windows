@@ -45,6 +45,13 @@ async function saveDark(value: string) {
   set(status, 'Applied ' + value)
 }
 
+async function resetDefaults() {
+  set(lightTheme, '')
+  set(darkTheme, '')
+  await plugin.request('config.set', { light: '', dark: '' })
+  set(status, 'Reset to Orca defaults')
+}
+
 export default function Panel() {
   const list = read(themes)
   const light = read(lightTheme)
@@ -67,6 +74,9 @@ export default function Panel() {
         options={options}
         onChange={(v: string) => void saveDark(v)}
       />
+      <Row gap="xs">
+        <Button variant="ghost" onPress={() => void resetDefaults()}>Use Orca defaults</Button>
+      </Row>
       {statusText ? <Text size="xs">{statusText}</Text> : null}
     </Stack>
   )

@@ -124,8 +124,8 @@ export default function activate(orca: OrcaWorkerApi): void {
 
   const LIGHT_KEY = 'lightTheme'
   const DARK_KEY = 'darkTheme'
-  const DEFAULT_LIGHT = 'plugin:stablyai.orca-ayu-theme/ayu-light'
-  const DEFAULT_DARK = 'plugin:stablyai.orca-ayu-theme/ayu-dark'
+  const DEFAULT_LIGHT = ''
+  const DEFAULT_DARK = ''
 
   async function getConfig() {
     const light = (await orca.storage.get(LIGHT_KEY)) as string | null
@@ -134,8 +134,8 @@ export default function activate(orca: OrcaWorkerApi): void {
   }
 
   async function setConfig(input: { light?: string; dark?: string }) {
-    if (input.light) await orca.storage.set(LIGHT_KEY, input.light)
-    if (input.dark) await orca.storage.set(DARK_KEY, input.dark)
+    if (input.light !== undefined) await orca.storage.set(LIGHT_KEY, input.light)
+    if (input.dark !== undefined) await orca.storage.set(DARK_KEY, input.dark)
     const cfg = await getConfig()
     orca.panels.post('config.changed', { light: cfg.light, dark: cfg.dark })
     return cfg
