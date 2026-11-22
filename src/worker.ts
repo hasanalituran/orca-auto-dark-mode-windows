@@ -93,15 +93,15 @@ export default function activate(orca: OrcaWorkerApi): void {
     const id = (await orca.settings.get(key)) as string | undefined
     const resolved = id ? resolveTheme(id) : null
     if (resolved) return resolved
-    // Fallback to embedded Ayu
+    // Fallback to a neutral palette approximating Orca's default theme
     return mode === 'dark'
-      ? { app: AYU_DARK_APP, terminal: AYU_DARK_TERMINAL }
-      : { app: AYU_LIGHT_APP, terminal: AYU_LIGHT_TERMINAL }
+      ? { app: NEUTRAL_DARK_APP, terminal: NEUTRAL_DARK_TERMINAL }
+      : { app: NEUTRAL_LIGHT_APP, terminal: NEUTRAL_LIGHT_TERMINAL }
   }
 
   async function applyMode(mode: 'dark' | 'light'): Promise<void> {
     const revisionResult = (await orca.host.call('appearance.read')) as { revision: string }
-    const { app, terminal } = await configuredTheme(mode)
+    const { app, terminal } = await configuredTheme2(mode)
     await orca.host.call('appearance.apply', {
       expectedRevision: revisionResult.revision,
       app,
@@ -122,6 +122,25 @@ export default function activate(orca: OrcaWorkerApi): void {
     return next
   }
 
+  const LIGHT_KEY = 'lightTheme'
+  const DARK_KEY = 'darkTheme'
+  const DEFAULT_LIGHT = 'plugin:stablyai.orca-ayu-theme/ayu-light'
+  const DEFAULT_DARK = 'plugin:stablyai.orca-ayu-theme/ayu-dark'
+
+  async function getConfig() {
+    const light = (await orca.storage.get(LIGHT_KEY)) as string | null
+    const dark = (await orca.storage.get(DARK_KEY)) as string | null
+    return { light: light || DEFAULT_LIGHT, dark: dark || DEFAULT_DARK }
+  }
+
+  async function setConfig(input: { light?: string; dark?: string }) {
+    if (input.light) await orca.storage.set(LIGHT_KEY, input.light)
+    if (input.dark) await orca.storage.set(DARK_KEY, input.dark)
+    const cfg = await getConfig()
+    orca.panels.post('config.changed', { light: cfg.light, dark: cfg.dark })
+    return cfg
+  }
+
   orca.commands.register('toggle', async () => toggle())
   orca.commands.register('list-themes', async () => {
     const themes = listInstalledThemes()
@@ -130,7 +149,27 @@ export default function activate(orca: OrcaWorkerApi): void {
     return themes
   })
 
+  orca.panels.handle('themes.list', async () => ({ themes: listInstalledThemes() }))
+  orca.panels.handle('config.get', async () => getConfig())
+  orca.panels.handle('config.set', async (input: any) => setConfig(input || {}))
+  orca.panels.handle('apply', async (input: any) => { await applyMode(input?.mode === 'dark' ? 'dark' : 'light'); return { mode: input?.mode === 'dark' ? 'dark' : 'light' } })
   orca.panels.handle('toggle', async () => ({ mode: await toggle() }))
+
+  // Also resolve configured themes in configuredTheme()
+  const origConfigured = configuredTheme
+  // override configuredTheme to use settings storage
+  async function configuredTheme2(mode: 'dark' | 'light'): Promise<{ app: string; terminal: string }> {
+    const cfg = await getConfig()
+    const id = mode === 'dark' ? cfg.dark : cfg.light
+    const resolved = resolveTheme(id)
+    if (resolved) return resolved
+    return mode === 'dark'
+      ? { app: AYU_DARK_APP, terminal: AYU_DARK_TERMINAL }
+      : { app: AYU_LIGHT_APP, terminal: AYU_LIGHT_TERMINAL }
+  }
+  // monkeypatch by reassigning not possible; instead call configuredTheme2 in applyMode
+  // We'll just modify applyMode below via edit
+
 
   void currentMode().then((mode) => {
     void orca.host.call('statusBar.update', {
