@@ -11,7 +11,7 @@ themes using user-selected installed themes.
   `appearance.read`/`appearance.apply`, handles `toggle`, `apply`, `config.*`, `themes.list`.
 - `src/panel.tsx` — components UI (Theme Picker dropdowns).
 - `src/resolver.ts` — pure helpers for parsing content ids and reading theme files (tested).
-- `src/resolver.test.js` — Vitest tests for resolver.
+- `src/*.test.js` — Vitest tests for resolver, manifest, and worker behavior.
 - `vitest.config.ts`, `tsconfig.json`, `tsconfig.test.json`.
 
 ## Commands
@@ -22,10 +22,24 @@ themes using user-selected installed themes.
 - Dev load: `orca plugin dev load . --approve <fingerprint>`
 - Dev reload: `orca plugin dev reload .`
 
+## Before finishing any task (required)
+
+1. Run `npx vitest run` — all tests must pass.
+2. Run `orca plugin validate .` — manifest and contributions must be valid.
+3. Run `orca plugin check .` when panels/editors change — the panel must render.
+4. Exercise the changed behavior in a dev build when feasible:
+   - `orca plugin dev load . --approve <fingerprint>`
+   - `orca plugin dev reload .`
+   - `orca plugin dev request . <handler> --data '<json>'`
+   - Capture UI with `orca plugin shot ...` and read the PNG.
+5. Add or update tests for behavior changes — do not claim completion without evidence.
+6. Report the exact commands run and their results.
+
 ## Publishing
 
 Community plugin: public repo + `orca-plugin` topic + `vX.Y.Z` tag. No PR to
-stablyai/orca-plugins. Bump `version` in orca-plugin.json for any change.
+stablyai/orca-plugins. Bump `version` in orca-plugin.json for any change. `main` is
+branch-protected: changes land through a PR with an approving review.
 
 ## Notes
 
