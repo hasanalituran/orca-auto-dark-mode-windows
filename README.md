@@ -16,10 +16,11 @@ installed Orca themes you choose. Defaults to Orca's neutral palette when nothin
 ## Install
 
 ```sh
-orca plugin install "https://github.com/hasanalituran/orca-auto-dark-mode-windows#v0.1.7"
+orca plugin install hasanalituran/orca-auto-dark-mode-windows
 ```
 
-Or search **Toggle Light/Dark Theme** in Orca's plugin browser once the listing is picked up.
+Or search **Toggle Light/Dark Theme** in Orca's plugin browser:
+[orca.dev/plugins/hasanalituran/orca-auto-dark-mode-windows](https://www.onorca.dev/plugins/hasanalituran/orca-auto-dark-mode-windows).
 
 ## Configure
 
