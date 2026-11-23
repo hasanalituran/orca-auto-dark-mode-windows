@@ -3,7 +3,7 @@
   "manifestVersion": 2,
   "id": "toggle-light-dark-theme",
   "name": "Toggle Light/Dark Theme",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "execution": "trusted-worker",
   "pluginApi": 1,
   "description": "Toggle Orca between light and dark themes from the status bar. Pick any installed theme for each mode in the Theme Picker panel; the status bar button switches instantly. Defaults to Orca's neutral palette when no theme is configured.",
@@ -19,7 +19,7 @@
       {
         "id": "theme-picker",
         "title": "Theme Picker",
-        "icon": "lightbulb",
+        "icon": "zap",
         "entry": "src/panel.tsx",
         "ui": "components"
       }

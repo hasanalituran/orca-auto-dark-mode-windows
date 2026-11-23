@@ -43,7 +43,7 @@ describe('worker toggle', () => {
     expect(status.at(-1).text).toBe('☀')
   })
 
-  it('falls back to the neutral palette when a configured theme is missing', async () => {
+  it('falls back to the Orca built-in palette when a configured theme is missing', async () => {
     const { orca, storage, applied, commands } = makeOrca()
     storage.set('darkTheme', 'plugin:test/themes/dark')
     activate(orca)
@@ -51,5 +51,19 @@ describe('worker toggle', () => {
     await commands.get('toggle')()
     expect(applied.length).toBe(1)
     expect(JSON.parse(applied.at(-1).app).base).toBe('dark')
+  })
+
+  it('applies the real Orca built-in palette when nothing is configured', async () => {
+    const { orca, applied, commands } = makeOrca()
+    activate(orca)
+    await new Promise((r) => setTimeout(r, 0))
+    await commands.get('toggle')() // light -> dark
+    const app = JSON.parse(applied.at(-1).app)
+    expect(app.base).toBe('dark')
+    // Orca's built-in dark background (#0a0a0a), not the old Ayu fallback (#10141c).
+    expect(app.tokens['--background']).toBe('#0a0a0a')
+    const term = JSON.parse(applied.at(-1).terminal)
+    // Orca's built-in dark terminal (Ghostty Default Style Dark).
+    expect(term.terminal.background).toBe('#282c34')
   })
 })
